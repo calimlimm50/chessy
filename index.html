@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Letter ❤️</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Georgia, serif;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    }
+
+    /* Background hearts */
+    .heart {
+        position: fixed;
+        bottom: -50px;
+        color: white;
+        font-size: 25px;
+        animation: rise 6s linear infinite;
+        opacity: 0;
+        z-index: 0;
+    }
+
+    @keyframes rise {
+        0% {
+            transform: translateY(0) rotate(0);
+            opacity: 0;
+        }
+
+        20% {
+            opacity: 0.8;
+        }
+
+        100% {
+            transform: translateY(-110vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* Letter */
+    .letter {
+        position: relative;
+        z-index: 2;
+        width: 90%;
+        max-width: 650px;
+        min-height: 520px;
+        padding: 45px;
+        background: #fffdf5;
+        border-radius: 10px;
+
+        box-shadow:
+            0 20px 50px rgba(0,0,0,0.3);
+
+        animation: openLetter 1.5s ease;
+    }
+
+    @keyframes openLetter {
+        from {
+            opacity: 0;
+            transform: scale(0.7) translateY(50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    h1 {
+        text-align: center;
+        color: #d6336c;
+        margin-bottom: 25px;
+        font-size: 36px;
+    }
+
+    .date {
+        text-align: right;
+        color: #888;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    #message {
+        color: #493535;
+        font-size: 18px;
+        line-height: 1.8;
+        min-height: 270px;
+    }
+
+    .signature {
+        margin-top: 20px;
+        text-align: right;
+        color: #d6336c;
+        font-size: 19px;
+        font-style: italic;
+    }
+
+    button {
+        display: block;
+        margin: 25px auto 0;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 30px;
+        background: #d6336c;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: scale(1.1);
+        background: #b52b59;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+        .letter {
+            padding: 25px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        #message {
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts -->
+<div class="heart" style="left:5%; animation-delay:0s;">♥</div>
+<div class="heart" style="left:15%; animation-delay:2s;">♥</div>
+<div class="heart" style="left:30%; animation-delay:4s;">♥</div>
+<div class="heart" style="left:50%; animation-delay:1s;">♥</div>
+<div class="heart" style="left:70%; animation-delay:3s;">♥</div>
+<div class="heart" style="left:85%; animation-delay:5s;">♥</div>
+<div class="heart" style="left:95%; animation-delay:2s;">♥</div>
+
+<!-- Love Letter -->
+<div class="letter">
+
+    <h1>My Love Letter ♥</h1>
+
+    <div class="date">
+        November 18, 2026
+    </div>
+
+    <div id="message"></div>
+
+    <div class="signature">
+        With love,<br>
+        Someone who cares ♥
+    </div>
+
+    <button onclick="makeHearts()">
+        Click Me ♥
+    </button>
+
+</div>
+
+<script>
+
+const message =
+`Dear bebe chessy ko,
+
+I just wanted to say na belated happy happy birthday sayo babyyy gaya ng sinabi ko na sana lahat ng wish mo sa buhay ay matupad you're the best girl na nakilala and sobrang minahal ko i love you so much babyyy i know na late dahil madaming code na ginawa ko dto kaya natagalan ikaw palang ang nagagawan ko ng ganito hehe i love you my everything`;
+
+let position = 0;
+
+function typeMessage() {
+
+    if (position < message.length) {
+
+        const character = message[position];
+
+        if (character === "\n") {
+            document.getElementById("message").innerHTML += "<br>";
+        } else {
+            document.getElementById("message").innerHTML += character;
+        }
+
+        position++;
+
+        setTimeout(typeMessage, 35);
+    }
+}
+
+typeMessage();
+
+
+function makeHearts() {
+
+    for (let i = 0; i < 25; i++) {
+
+        const heart = document.createElement("div");
+
+        heart.innerHTML = "♥";
+
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.bottom = "0";
+        heart.style.color = "#ffffff";
+        heart.style.fontSize =
+            (15 + Math.random() * 25) + "px";
+
+        heart.style.zIndex = "999";
+
+        document.body.appendChild(heart);
+
+        const animation = heart.animate(
+            [
+                {
+                    transform: "translateY(0) scale(1)",
+                    opacity: 1
+                },
+                {
+                    transform:
+                        "translateY(-100vh) rotate(360deg) scale(0.3)",
+                    opacity: 0
+                }
+            ],
+            {
+                duration: 3000 + Math.random() * 2000,
+                easing: "ease-out"
+            }
+        );
+
+        animation.onfinish = function () {
+            heart.remove();
+        };
+    }
+}
+
+</script>
+
+</body>
+</html>
